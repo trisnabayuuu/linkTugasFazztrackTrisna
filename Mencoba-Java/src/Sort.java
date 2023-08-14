@@ -1,12 +1,13 @@
 public class Sort {
     public static void main(String[] args) {
         
-
+    //task 3
     // Buatkan java program untuk sorting angka dari suatu array
     // Input array[] = {3,2,4,1,5}
     // Output array[] = {1,2,3,4,5}
 
     int[] array = {4,2,3,6,5,10,8,9,1};
+
     
     sort(array);
     

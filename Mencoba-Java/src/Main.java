@@ -19,6 +19,7 @@ public class Main {
 
 
         // menampilkan hasil dari scanner yang telah diisi diatas 
+        System.out.println("//////////Biodata//////////");
         System.out.println("Nama Lengkap : " + person.getFullName());
         System.out.println("Domisili : " + person.getDomicile());
         System.out.println("Usia : " + person.getAge());

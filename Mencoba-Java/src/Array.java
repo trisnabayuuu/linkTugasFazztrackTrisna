@@ -2,7 +2,7 @@
 
 public class Array {
     public static void main(String[] args) throws Exception {
-
+        //task 2
         // Buatkan java program untuk menampilkan angka array yang sama
         // Input: array1[]= [2,3,4,5] dan array2[] = [1,3,5,7]
         // Output [3,5].
