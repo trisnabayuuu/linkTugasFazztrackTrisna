@@ -30,7 +30,8 @@ public class Persegi implements InterfaceBangunDatar {
     }
     @Override
     public void karakteristikBangun() {
-        System.out.println("karakteristik");
+        System.out.println("=== KARAKTERISTIK ===");
+        System.out.println("mempunyai 4 sudut siku-siku, sisi yang sama panjang.");
         
     }
     @Override

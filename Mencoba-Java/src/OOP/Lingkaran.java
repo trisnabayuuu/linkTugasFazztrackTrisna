@@ -17,7 +17,8 @@ public class Lingkaran implements InterfaceBangunDatar {
 
     @Override
     public void karakteristikBangun() {
-        System.out.println("melingkar");
+        System.out.println("=== KARAKTERISTIK ===");
+        System.out.println("Memiliki jumlah sudut 180 derajat dan Memiliki diameter yang membagi lingkaran menjadi 2 sisi seimbang");
         
     }
 

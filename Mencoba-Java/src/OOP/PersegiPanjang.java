@@ -17,7 +17,8 @@ public class PersegiPanjang implements InterfaceBangunDatar {
     }
     @Override
     public void karakteristikBangun() {
-        System.out.println("memiliki 4 titik sudut");
+        System.out.println("=== KARAKTERISTIK ===");
+        System.out.println("memiliki 4 titik sudut siku-siku, mempunyai panjang dan lebar.");
         
     }
     @Override
