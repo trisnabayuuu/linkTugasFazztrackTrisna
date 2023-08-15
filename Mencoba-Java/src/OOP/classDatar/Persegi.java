@@ -1,9 +1,9 @@
-package OOP;
+package OOP.classDatar;
+
+import OOP.inteface.InterfaceBangunDatar;
 
 public class Persegi implements InterfaceBangunDatar {
     private Double sisi;
-
-
 
     public Double getSisi() {
         return sisi;
@@ -48,3 +48,4 @@ public class Persegi implements InterfaceBangunDatar {
 
 
 }
+

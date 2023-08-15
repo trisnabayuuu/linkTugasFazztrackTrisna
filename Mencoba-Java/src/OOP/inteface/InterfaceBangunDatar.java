@@ -1,8 +1,5 @@
-package OOP;
+package OOP.inteface;
 
-/**
- * InterfaceBangunDatar
- */
 public interface InterfaceBangunDatar {
 
     void menggambarBangun();

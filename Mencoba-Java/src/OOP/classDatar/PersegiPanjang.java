@@ -1,4 +1,7 @@
-package OOP;
+package OOP.classDatar;
+import OOP.inteface.InterfaceBangunDatar;
+
+
 
 public class PersegiPanjang implements InterfaceBangunDatar {
     private Double panjang;
@@ -23,7 +26,7 @@ public class PersegiPanjang implements InterfaceBangunDatar {
     }
     @Override
     public void menggambarBangun() {
-        System.out.println("       PERSEGI      ");
+        System.out.println("===     PERSEGI PANJANG     ===");
         for (int i = 0; i < this.panjang; i++) {
             for (int j = 0; j < this.lebar; j++) {
                 System.out.print("* ");
@@ -36,12 +39,19 @@ public class PersegiPanjang implements InterfaceBangunDatar {
         return panjang;
     }
     public void setPanjang(Double panjang) {
+        if (panjang <= 0) {
+            throw new ArithmeticException("Sisi tidak boleh 0!");
+        }
         this.panjang = Double.valueOf(panjang);
     }
     public Double getLebar() {
         return lebar;
     }
     public void setLebar(Double lebar) {
+        if (lebar <= 0) {
+            throw new ArithmeticException("Sisi tidak boleh 0!");
+        }
         this.lebar = Double.valueOf(lebar);
     }
 }
+

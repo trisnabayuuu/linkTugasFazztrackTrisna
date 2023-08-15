@@ -1,8 +1,5 @@
-package OOP;
+package OOP.inteface;
 
-/**
- * InnerInterfaceBangunRuang
- */
 public interface InterfaceBangunRuang {
 
     Double getVolume();

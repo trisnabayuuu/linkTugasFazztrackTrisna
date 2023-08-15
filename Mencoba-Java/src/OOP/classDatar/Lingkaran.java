@@ -1,4 +1,7 @@
-package OOP;
+
+package OOP.classDatar;
+
+import OOP.inteface.InterfaceBangunDatar;
 
 public class Lingkaran implements InterfaceBangunDatar {
     private Double phi = 3.14;
@@ -41,6 +44,9 @@ public class Lingkaran implements InterfaceBangunDatar {
     }
 
     public void setJariJari(Double jariJari) {
+        if (jariJari <= 0) {
+            throw new ArithmeticException("jari-jari tidak boleh 0!");
+        }
         this.jariJari = jariJari;
     }
 

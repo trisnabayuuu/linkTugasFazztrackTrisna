@@ -2,6 +2,12 @@ package OOP;
 
 import java.util.Scanner;
 
+import OOP.classDatar.Persegi;
+import OOP.classDatar.PersegiPanjang;
+import OOP.classRuang.Balok;
+import OOP.classRuang.Kubus;
+import OOP.classRuang.Tabung;
+
 public class Main {
 
 
@@ -30,6 +36,7 @@ public class Main {
                 persegi.setSisi(scanner.nextDouble());
                 persegi.menggambarBangun();
                 persegi.karakteristikBangun();
+
                 System.out.println("=== hasil ===");
                 System.out.println("keliling: " + persegi.getKeliling());
                 System.out.println("luas: " + persegi.getLuas());
@@ -43,6 +50,7 @@ public class Main {
                 lingkaran.setJariJari(scanner.nextDouble());
                 lingkaran.menggambarBangun();
                 lingkaran.karakteristikBangun();
+
                 System.out.println("=== hasil ===");
                 System.out.println("keliling: " + lingkaran.getKeliling());
                 System.out.println("luas: " + lingkaran.getLuas());
@@ -54,9 +62,9 @@ public class Main {
                 persegiPanjang.setLebar(scanner.nextDouble());
                 System.out.print("lebar: ");
                 persegiPanjang.setPanjang(scanner.nextDouble());
-
                 persegiPanjang.menggambarBangun();
                 persegiPanjang.karakteristikBangun();
+
                 System.out.println("=== hasil ===");
                 System.out.println("keliling: " + persegiPanjang.getKeliling());
                 System.out.println("luas: " + persegiPanjang.getLuas());
@@ -66,6 +74,7 @@ public class Main {
                 System.out.println("");
                 System.out.print("sisi: ");
                 kubus.setSisi(scanner.nextDouble());
+
                 System.out.println("=== hasil ===");
                 System.out.println("Volume: " + kubus.getVolume());
                 break;
@@ -76,11 +85,12 @@ public class Main {
                 tabung.setJariJari(scanner.nextDouble());
                 System.out.print("Tinggi: ");
                 tabung.setTinggi(scanner.nextDouble());
+
                 System.out.println(" ");
                 System.out.println("=== hasil ===");
                 System.out.println("Volume: " + tabung.getVolume());
                 break;
-             case 6:
+            case 6:
                 Balok balok = new Balok();
                 System.out.println("");
                 System.out.print("panjang: ");
@@ -89,6 +99,7 @@ public class Main {
                 balok.setPanjang(scanner.nextDouble());
                 System.out.print("tinggi: ");
                 balok.setTinggi(scanner.nextDouble());
+
                 System.out.println("=== hasil ===");
                 System.out.println("Volume: " + balok.getVolume());
                 break;
