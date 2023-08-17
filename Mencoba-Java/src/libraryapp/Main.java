@@ -1,14 +1,20 @@
 package libraryapp;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
 import libraryapp.dao.BukuDao;
+import libraryapp.dao.PeminjamanDao;
 import libraryapp.dao.UserDao;
 import libraryapp.models.Buku;
+import libraryapp.models.Peminjaman;
 import libraryapp.models.User;
 import libraryapp.services.book.BookServiceImpl;
 import libraryapp.services.book.Bookservice;
+import libraryapp.services.peminjaman.PeminjamanImpl;
+import libraryapp.services.peminjaman.PeminjamanService;
 import libraryapp.services.user.UserImpl;
 import libraryapp.services.user.UserService;
 
@@ -17,8 +23,10 @@ public class Main {
     static Bookservice bookService = new BookServiceImpl(bukuDao);
     static UserDao userDao = new UserDao();
     static UserService userService = new UserImpl(userDao);
+    static PeminjamanDao peminjamanDao = new PeminjamanDao();
+    static PeminjamanService peminjamanService = new PeminjamanImpl(peminjamanDao);
 
-    // private
+
     private static void menuUtama() {
         System.out.println("""
                 === SISTEM MANAJEMEN PERPUSTAKAAN ===
@@ -44,8 +52,8 @@ public class Main {
                     case "1":
                         System.out.println("=== Book Management ===");
                         System.out.println("""
-                                1. Add book
-                                2. Book data
+                                1. Tambah buku
+                                2. daftar buku
 
                                 """);
                         System.out.print("Input : ");
@@ -68,7 +76,7 @@ public class Main {
                                 bookService.createBook(buku);
                                 // }
 
-                                System.out.println("Do you want to see all book? (y|n)");
+                                System.out.println("Tampilkan semua list buku? (y|n)");
                                 String tampilkan = scanner.nextLine();
 
                                 if ("y".equalsIgnoreCase(tampilkan)) {
@@ -82,14 +90,14 @@ public class Main {
                                     ulang = false;
                                     break;
                                 } else {
-                                    System.out.println("Wrong input!");
+                                    System.out.println("input salah!");
                                     continue;
                                 }
 
                                 break;
 
                             case "2":
-                                System.out.println("=== The list of Books  ===");
+                                System.out.println("=== Daftar Buku ===");
 
                                 List<Buku> results = bookService.getBook();
                                 for (int i = 0; i < results.size(); i++) {
@@ -126,7 +134,7 @@ public class Main {
                                 System.out.println("===  register user  ===");
                                 User user = new User();
                                 System.out.println("""
-                                        input username and email 
+                                        input username and email
                                         """);
                                 user = new User(
                                         scanner.nextLine(),
@@ -138,10 +146,10 @@ public class Main {
 
                                 if ("y".equalsIgnoreCase(tampilkan)) {
 
-                                List<User> resultsUser = userService.getUser();
-                                for (int i = 0; i < resultsUser.size(); i++) {
-                                    System.out.println((i + 1) + ". " + resultsUser.get(i));
-                                }
+                                    List<User> resultsUser = userService.getUser();
+                                    for (int i = 0; i < resultsUser.size(); i++) {
+                                        System.out.println((i + 1) + ". " + resultsUser.get(i));
+                                    }
 
                                 } else if ("n".equalsIgnoreCase(tampilkan)) {
                                     ulang = false;
@@ -172,8 +180,8 @@ public class Main {
                     case "3":
                         System.out.println("=== user management ===");
                         System.out.println("""
-                                1. Borrow Books
-                                2. Return Books
+                                1. Peminjaman Buku
+                                2. Pengembalian Buku
                                 """);
                         System.out.print("Input pilihan: ");
 
@@ -181,14 +189,63 @@ public class Main {
                         transaction = scanner.nextLine();
                         switch (transaction) {
                             case "1":
-                                System.out.println("Borrow Books");
+                                System.out.println("=== Peminjaman buku ===");
+
+                                List<Buku> results = bookService.getBook();
+                                for (int i = 0; i < results.size(); i++) {
+                                    System.out.println((i + 1) + ". " + results.get(i));
+                                }
+                                System.out.println("Masukkan ID buku:");
+                                Integer pinjambuku = Integer.valueOf(scanner.nextLine());
+
+                                List<User> resultsUser = userService.getUser();
+                                    for (int i = 0; i < resultsUser.size(); i++) {
+                                        System.out.println((i + 1) + ". " + resultsUser.get(i));
+                                    }
+
+                                System.out.println("Massukkan ID User:");
+                                Integer pinjamUser = Integer.valueOf(scanner.nextLine());
+
+                                Buku buku = bookService.getBookById(pinjambuku);
+                                User user = userService.getUserById(pinjamUser);
+
+                                Peminjaman peminjaman = new Peminjaman();
+                                peminjaman.setTanggalPeminjaman(LocalDateTime.now());
+                                
+                                peminjaman.setBuku(buku);
+                                peminjaman.setUser(user);
+                                peminjamanService.createPeminjaman(peminjaman);
+                                System.out.println("=== Daftar peminjaman ===");
+
+                                List<Peminjaman> resultBorrow = peminjamanService.getPeminjaman();
+                                    for (int i = 0; i < resultBorrow.size(); i++) {
+                                        System.out.println((i + 1) + ". " + resultBorrow.get(i));
+                                    }
+
                                 break;
                             case "2":
-                                System.out.println("return book");
+                                System.out.println("pengembalian buku");
+
+                                List<Peminjaman> result = peminjamanService.getPeminjaman();
+                                    for (int i = 0; i < result.size(); i++) {
+                                        System.out.println((i + 1) + ". " + result.get(i));
+                                    }
+                                System.out.println("masukkan ID untuk pengembalian buku:");
+                                Integer returnBook = Integer.valueOf(scanner.nextLine());
+
+                                Peminjaman pengembalian = peminjamanService.getPeminjamanById(returnBook);
+
+                                pengembalian.setTanggalPengembalian(LocalDateTime.now());
+                                peminjamanService.updatePeminjaman(returnBook, pengembalian);
+                                
+                                List<Peminjaman> resultpengembalian = peminjamanService.getPeminjaman();
+                                    for (int i = 0; i < resultpengembalian.size(); i++) {
+                                        System.out.println((i + 1) + ". " + resultpengembalian.get(i));
+                                    }
                                 break;
 
                             default:
-
+                                    System.out.println("Menu tidak tersedia!");
                                 break;
                         }
                         break;

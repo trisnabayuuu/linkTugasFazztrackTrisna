@@ -34,7 +34,13 @@ public class BookServiceImpl implements Bookservice {
 
     @Override
     public Buku getBookById(Integer id) {
-        return bukuDao.findById(1);
+        try {
+            return bukuDao.findById(id);
+            
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("id tidak ditemukan");
+        }
+        return null;
     }
 
     

@@ -15,10 +15,10 @@ public class UserImpl implements UserService {
     @Override
     public void createUser(User user) {
         if (user.getUsername() == "") {
-            System.out.println("Username empty");
+            throw new ExceptionInInitializerError("username tidak boleh kosong");
             
         } else if (user.getEmail() == ""){
-            System.out.println("Email empty");
+            throw new ExceptionInInitializerError("email tidak boleh kosong");
         } else {
             
         }
@@ -28,12 +28,23 @@ public class UserImpl implements UserService {
 
     @Override
     public List<User> getUser() {
+        if (userDao == null) {
+            throw new ExceptionInInitializerError("User kosong");
+            
+        }
         return userDao.findAll();
     }
 
     @Override
     public User getUserById(Integer id) {
-        return userDao.findById(1);
+        try {
+            return userDao.findById(id);
+            
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("id tidak ditemukan");
+        }
+        return null;
+        
     }
     
 }

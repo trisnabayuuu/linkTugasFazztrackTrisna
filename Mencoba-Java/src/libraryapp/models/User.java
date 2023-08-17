@@ -1,8 +1,8 @@
 package libraryapp.models;
 
-public class User {
-    String username;
-    String email;
+public class User extends Buku{
+    private String username;
+    private String email;
     
     public User() {
     }
@@ -14,7 +14,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "user [username=" + username + ", email=" + email + "]";
+        return "user [username: " + username + ", email: " + email + "]";
     }
     
     public String getUsername() {
