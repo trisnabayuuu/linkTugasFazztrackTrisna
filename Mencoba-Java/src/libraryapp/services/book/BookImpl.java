@@ -5,21 +5,21 @@ import java.util.List;
 import libraryapp.dao.BukuDao;
 import libraryapp.models.Buku;
 
-public class BookServiceImpl implements Bookservice {
+public class BookImpl implements Bookservice {
     BukuDao bukuDao;
 
-    public BookServiceImpl(BukuDao bukuDao) {
+    public BookImpl(BukuDao bukuDao) {
         this.bukuDao = bukuDao;
     }
 
     @Override
     public void createBook(Buku buku) {
         if (buku.getJudul() == "") {
-            System.out.println("judul empty");
+            throw new ExceptionInInitializerError("judul kosong");
         } else if (buku.getPenerbit() == "") {
-            System.out.println("penerbit empty");
+            throw new ExceptionInInitializerError("penerbit kosong");
         } else if (buku.getPengarang() == ""){
-            System.out.println("pengarang empty");
+            throw new ExceptionInInitializerError("pengarang kosong");
         } else {
         }
         bukuDao.create(buku);

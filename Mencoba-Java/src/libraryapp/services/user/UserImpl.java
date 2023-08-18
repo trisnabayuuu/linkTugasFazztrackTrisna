@@ -1,5 +1,6 @@
 package libraryapp.services.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import libraryapp.dao.UserDao;
@@ -28,11 +29,18 @@ public class UserImpl implements UserService {
 
     @Override
     public List<User> getUser() {
-        if (userDao == null) {
-            throw new ExceptionInInitializerError("User kosong");
-            
+    
+    try {
+        List<User> users = userDao.findAll();
+        
+        if (users.isEmpty()) {
+            throw new ExceptionInInitializerError("Daftar pengguna kosong");
         }
-        return userDao.findAll();
+        return users;
+    } catch (ExceptionInInitializerError e) {
+        e.printStackTrace();
+        return new ArrayList<>(); // Mengembalikan daftar kosong
+    } 
     }
 
     @Override

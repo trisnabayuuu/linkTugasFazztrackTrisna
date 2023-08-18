@@ -1,8 +1,5 @@
 package libraryapp.models;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Peminjaman {
 
     private String tanggalPengembalian;
@@ -25,16 +22,16 @@ public class Peminjaman {
     public String getTanggalPengembalian() {
         return tanggalPengembalian;
     }
-    public void setTanggalPengembalian(LocalDateTime tanggalPengembalian) {
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("EEEE, dd MMM uuuu kk:mm:ss");
-        this.tanggalPengembalian = tanggalPengembalian.format(formatDateTime);
+    public void setTanggalPengembalian(String tanggalPengembalian) {
+    //    DateTimeFormatter.ofPattern("EEEE, dd MMM uuuu kk:mm:ss");
+        this.tanggalPengembalian = tanggalPengembalian;
     }
     public String getTanggalPeminjaman() {
         return tanggalPeminjaman;
     }
-    public void setTanggalPeminjaman(LocalDateTime localDateTime) {
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("EEEE, dd MMM uuuu kk:mm:ss");
-        this.tanggalPeminjaman = localDateTime.format(formatDateTime);
+    public void setTanggalPeminjaman(String tanggalPeminjaman) {
+        // DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("EEEE, dd MMM uuuu kk:mm:ss");
+        this.tanggalPeminjaman = tanggalPeminjaman;
     }
     public Buku getBuku() {
         return buku;

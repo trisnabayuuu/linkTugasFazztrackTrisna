@@ -11,7 +11,7 @@ import libraryapp.dao.UserDao;
 import libraryapp.models.Buku;
 import libraryapp.models.Peminjaman;
 import libraryapp.models.User;
-import libraryapp.services.book.BookServiceImpl;
+import libraryapp.services.book.BookImpl;
 import libraryapp.services.book.Bookservice;
 import libraryapp.services.peminjaman.PeminjamanImpl;
 import libraryapp.services.peminjaman.PeminjamanService;
@@ -20,7 +20,7 @@ import libraryapp.services.user.UserService;
 
 public class Main {
     static BukuDao bukuDao = new BukuDao();
-    static Bookservice bookService = new BookServiceImpl(bukuDao);
+    static Bookservice bookService = new BookImpl(bukuDao);
     static UserDao userDao = new UserDao();
     static UserService userService = new UserImpl(userDao);
     static PeminjamanDao peminjamanDao = new PeminjamanDao();
@@ -53,7 +53,7 @@ public class Main {
                         System.out.println("=== Book Management ===");
                         System.out.println("""
                                 1. Tambah buku
-                                2. daftar buku
+                                2. Daftar buku
 
                                 """);
                         System.out.print("Input : ");
@@ -62,7 +62,7 @@ public class Main {
                         bookinput = scanner.nextLine();
                         switch (bookinput) {
                             case "1":
-                                System.out.println("=== Add New Books ===");
+                                System.out.println("=== Tambah Buku ===");
                                 Buku buku = new Buku();
                                 System.out.println("""
                                         judul:
@@ -121,8 +121,8 @@ public class Main {
                     case "2":
                         System.out.println("=== user management ===");
                         System.out.println("""
-                                1. Register User
-                                2. The list of User
+                                1. Tambah User
+                                2. Daftar list user
 
                                 """);
                         System.out.print("Input pilihan: ");
@@ -210,7 +210,7 @@ public class Main {
                                 User user = userService.getUserById(pinjamUser);
 
                                 Peminjaman peminjaman = new Peminjaman();
-                                peminjaman.setTanggalPeminjaman(LocalDateTime.now());
+                                // peminjaman.setTanggalPeminjaman();///////////
                                 
                                 peminjaman.setBuku(buku);
                                 peminjaman.setUser(user);
@@ -235,7 +235,7 @@ public class Main {
 
                                 Peminjaman pengembalian = peminjamanService.getPeminjamanById(returnBook);
 
-                                pengembalian.setTanggalPengembalian(LocalDateTime.now());
+                                // pengembalian.setTanggalPengembalian();
                                 peminjamanService.updatePeminjaman(returnBook, pengembalian);
                                 
                                 List<Peminjaman> resultpengembalian = peminjamanService.getPeminjaman();
