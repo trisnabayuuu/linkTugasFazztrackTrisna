@@ -1,7 +1,5 @@
 package libraryapp;
 
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,8 +19,10 @@ import libraryapp.services.user.UserService;
 public class Main {
     static BukuDao bukuDao = new BukuDao();
     static Bookservice bookService = new BookImpl(bukuDao);
+    
     static UserDao userDao = new UserDao();
     static UserService userService = new UserImpl(userDao);
+
     static PeminjamanDao peminjamanDao = new PeminjamanDao();
     static PeminjamanService peminjamanService = new PeminjamanImpl(peminjamanDao);
 
