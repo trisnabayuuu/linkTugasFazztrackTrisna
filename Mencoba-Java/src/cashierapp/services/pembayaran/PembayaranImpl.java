@@ -22,7 +22,6 @@ public class PembayaranImpl implements PembayranService {
         String formattedDateTime = formatDateTime.format(now);
 
         pembayaran.setTanggal(formattedDateTime);
-        // set tanggal
         try {
             pembayaranDao.create(pembayaran);
 
