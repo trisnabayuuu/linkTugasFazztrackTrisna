@@ -32,7 +32,7 @@ List<Minuman> minuman = new ArrayList<>();
 
     @Override
     public Minuman findById(Integer id) {
-        return this.minuman.get(id);
+        return this.minuman.get(id-1);
     }
 
     @Override

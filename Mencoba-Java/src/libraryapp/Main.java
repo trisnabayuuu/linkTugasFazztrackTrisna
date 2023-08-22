@@ -19,7 +19,7 @@ import libraryapp.services.user.UserService;
 public class Main {
     static BukuDao bukuDao = new BukuDao();
     static Bookservice bookService = new BookImpl(bukuDao);
-    
+
     static UserDao userDao = new UserDao();
     static UserService userService = new UserImpl(userDao);
 
@@ -236,6 +236,7 @@ public class Main {
                                 Peminjaman pengembalian = peminjamanService.getPeminjamanById(returnBook);
 
                                 // pengembalian.setTanggalPengembalian();
+                                
                                 peminjamanService.updatePeminjaman(returnBook, pengembalian);
                                 
                                 List<Peminjaman> resultpengembalian = peminjamanService.getPeminjaman();

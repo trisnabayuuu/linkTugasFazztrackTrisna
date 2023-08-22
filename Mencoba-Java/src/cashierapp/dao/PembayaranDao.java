@@ -1,31 +1,37 @@
 package cashierapp.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PembayaranDao implements BaseDao{
+import cashierapp.models.Pembayaran;
+// import cashierapp.models.Pesan;
+
+public class PembayaranDao implements BaseDao<Pembayaran, Integer>{
+    // Pembayaran pembayaran;
+    List<Pembayaran> pembayaran = new ArrayList<>();
 
     @Override
-    public void create(Object data) {
+    public void create(Pembayaran data) {
+        pembayaran.add(data);
+    }
+
+    @Override
+    public void delete(Integer id) {
         
     }
 
     @Override
-    public void delete(Object id) {
-        
+    public List<Pembayaran> findAll() {
+        return this.pembayaran;
     }
 
     @Override
-    public List findAll() {
+    public Pembayaran findById(Integer id) {
         return null;
     }
 
     @Override
-    public Object findById(Object id) {
-        return null;
-    }
-
-    @Override
-    public void update(Object id, Object data) {
+    public void update(Integer id, Pembayaran data) {
         
     }
 

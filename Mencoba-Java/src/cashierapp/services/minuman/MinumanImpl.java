@@ -16,7 +16,13 @@ public class MinumanImpl implements MinumanService {
 
     @Override
     public Minuman getByIdMimuman(Integer id) {
-        return minumanDao.findById(id);
+        try {
+            return minumanDao.findById(id);
+            
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("id tidak ditemukan");
+        }
+        return null;
     }
 
     @Override

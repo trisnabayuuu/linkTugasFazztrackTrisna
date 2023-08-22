@@ -6,10 +6,12 @@ import java.util.Scanner;
 import cashierapp.dao.MakananDao;
 import cashierapp.dao.MinumanDao;
 import cashierapp.dao.PaketDao;
+import cashierapp.dao.PembayaranDao;
 import cashierapp.dao.PemesananDao;
 import cashierapp.models.Makanan;
 import cashierapp.models.Minuman;
 import cashierapp.models.Paket;
+import cashierapp.models.Pembayaran;
 import cashierapp.models.Pesan;
 import cashierapp.services.makanan.MakananImpl;
 import cashierapp.services.makanan.MakananService;
@@ -17,9 +19,10 @@ import cashierapp.services.minuman.MinumanImpl;
 import cashierapp.services.minuman.MinumanService;
 import cashierapp.services.paket.PaketImpl;
 import cashierapp.services.paket.PaketService;
+import cashierapp.services.pembayaran.PembayaranImpl;
+import cashierapp.services.pembayaran.PembayranService;
 import cashierapp.services.pesan.PemesananImpl;
 import cashierapp.services.pesan.PemesananService;
-
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -35,6 +38,9 @@ public class Main {
     // pesan
     static PemesananDao pemesananDao = new PemesananDao();
     static PemesananService pemesananService = new PemesananImpl(pemesananDao);
+    // pembayaran
+    static PembayaranDao pembayaranDao = new PembayaranDao();
+    static PembayranService pembayranService = new PembayaranImpl(pembayaranDao);
 
     private static void restoran() {
         System.out.println("""
@@ -58,28 +64,45 @@ public class Main {
 
     }
 
-    // private static void validasi() {
-        // System.out.print("Ingin menambah / mengubah pesanan?
-        // (tambah/ubah/kembali):");
-        // String pesanMakan = scanner.nextLine();
-        // while (true) {
-        // if ("tambah".equalsIgnoreCase(pesanMakan)) {
-        // System.out.println("Silahkan input banyaknya pesanan: ");
-        // Integer qty = Integer.valueOf(scanner.nextLine());
+    private static void pembayaran() {
+        Pembayaran pembayaran = new Pembayaran();
+        pembayranService.createPembayaran(pembayaran);
+        System.out.println("");
+        listPesanan();
 
-        // break;
-        // } else if ("ubah".equalsIgnoreCase(pesanMakan)) {
-        // System.out.println("ini ubah");
-        // break;
-        // } else if ("kembali".equalsIgnoreCase(pesanMakan)) {
-        // System.out.println("ini kembali");
-        // break;
-        // } else {
-        // System.out.println("Input salah!");
-        // continue;
-        // }
-        // }
-//    }
+        Double total = 0.0;
+        List<Pesan> listPesanan = pemesananService.getPesan();
+        for (Pesan pesan : listPesanan) {
+            total += pesan.getTotal();
+        }
+        System.out.println("Total Harga: " + total);
+    }
+
+    private static void updatePesanan() {
+        System.out.print("Silahkan input nomor pesanan : ");
+        Integer nomor = Integer.valueOf(scanner.nextLine());
+
+        System.out.println("Silahkan input nomor pesanan : ");
+        Integer ubahQty = Integer.valueOf(scanner.nextLine());
+
+        Pesan pesanUpdate = new Pesan();
+        pesanUpdate.setQty(ubahQty);
+
+        pemesananDao.update(nomor, pesanUpdate);
+
+
+    }
+
+    private static void tax() {
+        Double total = 0.0;
+        List<Pesan> listPesanan = pemesananService.getPesan();
+        for (Pesan pesan : listPesanan) {
+            total += pesan.getTotal();
+        }
+        Double withTax = ((total * 11) / 100);
+        Double totalBayar = withTax + total;
+        System.out.println("Total harga setelah PPN (11%): " + totalBayar);
+    }
 
     private static void listPesanan() {
         System.out.println("========== PESANAN ANDA ==========");
@@ -87,12 +110,7 @@ public class Main {
         for (int i = 0; i < listPesanan.size(); i++) {
             System.out.println((i + 1) + ". " + listPesanan.get(i));
         }
-        Double totaltax = 0.0;
-        for (Pesan pesan : listPesanan){
-            totaltax += pesan.getTotal();
-        }
-        Double withTax = ((totaltax * 11)/100);
-        System.out.println("Total harga setelah PPN (11%): " + (withTax + totaltax));
+
     }
 
     private static void pesanMakan() {
@@ -101,7 +119,7 @@ public class Main {
         Integer nomor = Integer.valueOf(scanner.nextLine());
 
         System.out.print("Silahkan input banyaknya pesanan: ");
-        Double qty = Double.valueOf(scanner.nextLine());
+        Integer qty = Integer.valueOf(scanner.nextLine());
 
         Makanan makanan = makananService.getByIdMakanan(nomor);
         String namaMakanan = makanan.getMakanan();
@@ -115,13 +133,14 @@ public class Main {
         pemesananService.createPesan(pesanmakan);
 
     }
+
     private static void pesanMinum() {
 
-        System.out.print("Silahkan input nomor pesanan makanan: ");
+        System.out.print("Silahkan input nomor pesanan minuman: ");
         Integer nomor = Integer.valueOf(scanner.nextLine());
 
         System.out.print("Silahkan input banyaknya pesanan: ");
-        Double qty = Double.valueOf(scanner.nextLine());
+        Integer qty = Integer.valueOf(scanner.nextLine());
 
         Minuman minuman = minumanService.getByIdMimuman(nomor);
         String namaMinuman = minuman.getMinuman();
@@ -135,13 +154,14 @@ public class Main {
         pemesananService.createPesan(pesanMinum);
 
     }
+
     private static void pesanPaket() {
 
         System.out.print("Silahkan input nomor pesanan makanan: ");
         Integer nomor = Integer.valueOf(scanner.nextLine());
 
         System.out.print("Silahkan input banyaknya pesanan: ");
-        Double qty = Double.valueOf(scanner.nextLine());
+        Integer qty = Integer.valueOf(scanner.nextLine());
 
         Paket paket = paketService.getByIdPaket(nomor);
         String namaPaket = paket.getPaket();
@@ -175,10 +195,6 @@ public class Main {
 
     }
 
-    private static void total() {
-        System.out.println("========== PESANAN ANDA ==========");
-    }
-
     private static void pesan() {
         System.out.println("""
                 ========== PESAN ==========
@@ -189,12 +205,12 @@ public class Main {
     }
 
     // private static void pemesanan() {
-    //     System.out.println("pemesanan");
+    // System.out.println("pemesanan");
     // }
 
     // private static void pembayaran() {
 
-    //     System.out.println("pembayaran");
+    // System.out.println("pembayaran");
     // }
 
     public static void main(String[] args) {
@@ -216,6 +232,7 @@ public class Main {
                 case "2":
                     pesan();
 
+                    System.out.print("pilihan: ");
                     String pilih1 = "";
                     pilih1 = scanner.nextLine();
                     switch (pilih1) {
@@ -223,25 +240,120 @@ public class Main {
                             menuMakanan();
                             pesanMakan();
                             listPesanan();
-                            break;
+                            tax();
+                            Boolean ulangMakanan = true;
+                            // while (ulangMakanan) {
+                            System.out.print("Ingin menambah / mengubah pesanan? (tambah/ubah/kembali):");
+                            String pesanMakan = scanner.nextLine();
+                                    
+                            if ("tambah".equalsIgnoreCase(pesanMakan)) {
+                                pesanMakan();
+                                listPesanan();
+                                tax();
+                                ulangMakanan = true;
+                                break;
+                            } else if ("ubah".equalsIgnoreCase(pesanMakan)) {
+                                updatePesanan();
+                                listPesanan();
+                                tax();
+                                ulangMakanan = true;
+                                break;
+                            } else if ("kembali".equalsIgnoreCase(pesanMakan)) {
+                                break;
+                            } else {
+                                System.out.println("Input salah!");
+                                
+                            }
+                        break;
+                        
+                            
 
                         case "2":
                             menuMinuman();
                             pesanMinum();
                             listPesanan();
+                            tax();
+                            System.out.print("Ingin menambah / mengubah pesanan? (tambah/ubah/kembali):");
+                            String pesanMinuman = scanner.nextLine();
+
+
+                                while (true) {
+                                    if ("tambah".equalsIgnoreCase(pesanMinuman)) {
+                                        pesanMinum();
+                                        listPesanan();
+                                        tax();
+                                        break;
+                                    } else if ("ubah".equalsIgnoreCase(pesanMinuman)) {
+                                        updatePesanan();
+                                        listPesanan();
+                                        tax();
+                                        break;
+                                    } else if ("kembali".equalsIgnoreCase(pesanMinuman)) {
+                                        break;
+                                    } else {
+                                        System.out.println("Input salah!");
+                                        break;
+                                    }
+                                }
                             break;
 
                         case "3":
                             menuPaket();
                             pesanPaket();
                             listPesanan();
-                            break;
+                            System.out.print("Ingin menambah / mengubah pesanan? (tambah/ubah/kembali):");
+                            String pesanPaket = scanner.nextLine();
+                            while (true) {
+                                if ("tambah".equalsIgnoreCase(pesanPaket)) {
+                                    pesanMinum();
+                                    listPesanan();
+                                } else if ("ubah".equalsIgnoreCase(pesanPaket)) {
+                                    updatePesanan();
+                                    listPesanan();
+                                } else if ("kembali".equalsIgnoreCase(pesanPaket)) {
+                                } else {
+                                    System.out.println("Input salah!");
+                                    break;
+                                }
+                            }
                         default:
+                            System.out.println("input salah!");
                             break;
                     }
                     break;
                 case "3":
-                    total();
+                    listPesanan();
+                    tax();
+                    Double totaltax = 0.0;
+                    List<Pesan> listPesanan = pemesananService.getPesan();
+                    for (Pesan pesan : listPesanan) {
+                        totaltax += pesan.getTotal();
+                    }
+                    Double withTax = ((totaltax * 11) / 100);
+                    Double totalBayar = withTax + totaltax;
+                    Boolean pembayaran = true;
+                    while (pembayaran) {
+                        System.out.print("cash: ");
+                        Double cash = Double.valueOf(scanner.nextLine());
+                        Double kembalian = cash - totalBayar;
+                        if (cash < totalBayar) {
+                            System.out.println("Cash tidak cukup, masukkak cash yang cukup");
+                            pembayaran = true;
+
+                        } else {
+                            pembayaran();
+                            tax();
+                            System.out.println("Biaya PPN (11%) " + withTax);
+                            System.out.println("Total Harga Pembelian: " + totalBayar);
+                            System.out.println("Total Harga: " + cash);
+                            System.out.println("Kembalian: " + kembalian);
+                            System.out.println("Terima kasih. Silahkan datang kembali~");
+
+                            pembayaran = false;
+
+                        }
+                    }
+
                     break;
 
                 default:

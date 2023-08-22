@@ -34,7 +34,7 @@ List<Makanan> makanan = new ArrayList<>();
 
     @Override
     public Makanan findById(Integer id) {
-        return this.makanan.get(id);
+        return this.makanan.get(id-1);
     }
 
     @Override

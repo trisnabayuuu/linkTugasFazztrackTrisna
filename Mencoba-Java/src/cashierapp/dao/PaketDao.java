@@ -23,13 +23,13 @@ List<Paket> paket = new ArrayList<>();
         paket = new ArrayList<>();
         paket.add(new Paket("Paket A: Ayam Geprek + Nasi + Es Teh Manis", 20000.0));
         paket.add(new Paket("Paket B: Ayam Geprek + Nasi + Tahu + Tempe + Es Teh Manis", 23000.0));
-        paket.add(new Paket("Paket C: Ayam Geprek + Nasi + Tahu + Tempe + Sate(Kulit/Usus/Ati Ampela) + Es Teh Manis ", 25000.0));
+        paket.add(new Paket("Paket C: Ayam Geprek + Nasi + Tahu + Tempe + Sate + Es Teh Manis ", 25000.0));
         return paket;
     }
 
     @Override
     public Paket findById(Integer id) {
-        return this.paket.get(id);
+        return this.paket.get(id-1);
     }
 
     @Override

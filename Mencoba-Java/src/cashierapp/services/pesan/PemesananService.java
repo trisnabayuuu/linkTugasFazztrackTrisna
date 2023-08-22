@@ -8,4 +8,6 @@ public interface PemesananService {
     void createPesan (Pesan pesan);
     List<Pesan> getPesan();
     Pesan getIdPesan(Integer id);
+    void UpdatePesan(Integer id, Pesan pesan);
+    
 }

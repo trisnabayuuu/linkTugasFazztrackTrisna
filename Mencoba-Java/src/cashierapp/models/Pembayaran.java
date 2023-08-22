@@ -1,31 +1,27 @@
 package cashierapp.models;
 
 public class Pembayaran {
-    private Double uangPembayaran;
-    private Double uangKembalian;
-    
+    private String tanggal;
 
     
+    public Pembayaran(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
     public Pembayaran() {
     }
-    public Pembayaran(Double uangPembayaran, Double uangKembalian) {
-        this.uangPembayaran = uangPembayaran;
-        this.uangKembalian = uangKembalian;
-    }
-    public Double getUangPembayaran() {
-        return uangPembayaran;
-    }
-    public void setUangPembayaran(Double uangPembayaran) {
-        this.uangPembayaran = uangPembayaran;
-    }
-    public Double getUangKembalian() {
-        return uangKembalian;
-    }
-    public void setUangKembalian(Double uangKembalian) {
-        this.uangKembalian = uangKembalian;
+
+    public String getTanggal() {
+        return tanggal;
     }
 
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    @Override
+    public String toString() {
+        return "tanggal : " + tanggal ;
+    }
     
-
-
 }

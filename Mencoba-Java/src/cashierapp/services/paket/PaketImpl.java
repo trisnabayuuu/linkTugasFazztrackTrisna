@@ -19,8 +19,13 @@ public class PaketImpl implements PaketService {
 
     @Override
     public Paket getByIdPaket(Integer id) {
-
-        return paketDao.findById(id);
+        try {
+            return paketDao.findById(id);
+            
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("id tidak ditemukan");
+        }
+        return null;
     }
 
     @Override

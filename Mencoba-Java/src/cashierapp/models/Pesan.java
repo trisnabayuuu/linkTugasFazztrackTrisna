@@ -1,22 +1,22 @@
 package cashierapp.models;
 
 public class Pesan {
-    private Double qty;
+    private Integer qty;
     private String namaBarang;
     private Double harga;
 
     public Pesan() {
     }
-    public Pesan(Double qty, String namaBarang, Double harga) {
+    public Pesan(Integer qty, String namaBarang, Double harga) {
         this.qty = qty;
         this.namaBarang = namaBarang;
         this.harga = harga;
         // this.total = total;
     }
-    public Double getQty() {
+    public Integer getQty() {
         return qty;
     }
-    public void setQty(Double qty) {
+    public void setQty(Integer qty) {
         this.qty = qty;
     }
     public String getNamaBarang() {
