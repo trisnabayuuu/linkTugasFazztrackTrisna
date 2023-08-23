@@ -15,10 +15,15 @@ public class PembayaranDao implements BaseDao<Pembayaran, Integer>{
         pembayaran.add(data);
     }
 
+
+
     @Override
-    public void delete(Integer id) {
+    public void delete(Pembayaran data) {
+        // TODO Auto-generated method stub
         
     }
+
+
 
     @Override
     public List<Pembayaran> findAll() {

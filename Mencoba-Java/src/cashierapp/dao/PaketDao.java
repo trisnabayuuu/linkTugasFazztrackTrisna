@@ -13,10 +13,15 @@ List<Paket> paket = new ArrayList<>();
         
     }
 
+
+
     @Override
-    public void delete(Integer id) {
+    public void delete(Paket data) {
+        // TODO Auto-generated method stub
         
     }
+
+
 
     @Override
     public List<Paket> findAll() {

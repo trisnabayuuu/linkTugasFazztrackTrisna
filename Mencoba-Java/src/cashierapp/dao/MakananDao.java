@@ -13,7 +13,7 @@ List<Makanan> makanan = new ArrayList<>();
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Makanan data) {
         
     }
 

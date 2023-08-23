@@ -48,6 +48,7 @@ public class Main {
                 1. Lihat Daftar Menu
                 2. Input Pemesanan
                 3. Pembayaran
+                4. Hapus pemesanan
 
                 """);
 
@@ -203,6 +204,11 @@ public class Main {
         }
 
     }
+    private static void clearPesanan() {
+        Pesan pesan = new Pesan();
+        pemesananService.deletePesan(pesan);
+        System.out.println("Semua pesanan telah dihapus.");
+    }
 
     private static void pesan() {
         System.out.println("""
@@ -355,12 +361,14 @@ public class Main {
                             System.out.println("Terima kasih. Silahkan datang kembali~");
 
                             pembayaran = false;
-
                         }
                     }
 
                     break;
 
+                    case "4":
+                        clearPesanan();
+                    break;
                 default:
                     System.out.println("input salah");
                     break;
@@ -383,3 +391,5 @@ public class Main {
         scanner.close();
     }
 }
+
+// hapus

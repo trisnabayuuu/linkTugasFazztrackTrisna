@@ -15,7 +15,8 @@ public class PemesananDao implements BaseDao<Pesan, Integer>{
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Pesan data) {
+        listPesan.clear();
     }
 
     @Override

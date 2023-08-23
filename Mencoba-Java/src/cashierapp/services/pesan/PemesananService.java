@@ -9,5 +9,7 @@ public interface PemesananService {
     List<Pesan> getPesan();
     Pesan getIdPesan(Integer id);
     void UpdatePesan(Integer id, Pesan pesan);
+    void deletePesan(Pesan pesan);
+
     
 }

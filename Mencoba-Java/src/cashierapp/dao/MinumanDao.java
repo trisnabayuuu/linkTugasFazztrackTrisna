@@ -12,10 +12,15 @@ List<Minuman> minuman = new ArrayList<>();
         
     }
 
+
+
     @Override
-    public void delete(Integer id) {
+    public void delete(Minuman data) {
+        // TODO Auto-generated method stub
         
     }
+
+
 
     @Override
     public List<Minuman> findAll() {
