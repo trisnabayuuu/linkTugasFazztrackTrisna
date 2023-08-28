@@ -1,0 +1,182 @@
+/*add user*/
+INSERT INTO
+    USER (
+        USERNAME,
+        EMAIL,
+        PASSWORD,
+        BALANCE,
+        PIN,
+        CREATE_AT,
+        IS_REGISTERED,
+        IS_REMEMBER,
+        IS_LOGGED_IN,
+        IS_DELETED
+    )
+VALUES
+    (
+        'INI USERNAME',
+        'INI EMAIL',
+        'INI PASSWORD',
+        10000,
+        123456,
+        '2023-08-25',
+        TRUE,
+        TRUE,
+        TRUE,
+        FALSE
+    );
+
+/*total balance*/
+UPDATE
+    USER u
+    JOIN (
+        SELECT
+            ID_USER,
+            SUM(AMOUNT) AS TOTAL_TOPUP
+        FROM
+            TOPUP
+        WHERE
+            IS_DELETED = FALSE
+        GROUP BY
+            ID_USER
+    ) t ON u.ID_USER = t.ID_USER
+SET
+    u.BALANCE = u.BALANCE + t.TOTAL_TOPUP;
+
+/*melakukan top up*/
+INSERT INTO
+    TOPUP (AMOUNT, METHOD, CREATED_AT, IS_DELETED)
+VALUES
+    (10000, 'INI METHOD', '2023-08-25', FALSE);
+
+/ / total balance
+UPDATE
+    USER u
+    JOIN (
+        SELECT
+            ID_USER,
+            SUM(AMOUNT) AS TOTAL_TOPUP
+        FROM
+            TOPUP
+        WHERE
+            IS_DELETED = FALSE
+        GROUP BY
+            ID_USER
+    ) t ON u.ID_USER = t.ID_USER
+SET
+    u.BALANCE = u.BALANCE + t.TOTAL_TOPUP;
+
+/*history top up*/
+SELECT
+    t.ID_TOP_UP,
+    u.USERNAME,
+    t.AMOUNT,
+    t.CREATED_AT
+FROM
+    TOPUP t
+    JOIN USER u ON t.ID_USER = u.ID_USER
+WHERE
+    t.IS_DELETED = FALSE
+ORDER BY
+    t.CREATED_AT DESC;
+
+/*melakukan transfer*/
+INSERT INTO
+    TRANSFER (
+        ID_USER,
+        USERNAME_PENERIMA,
+        AMOUNT,
+        DESCRIPTION,
+        CREATED_AT,
+        IS_DELETED
+    )
+VALUES
+    (
+        'INI ID USER',
+        'INI USERNAME PENERIMA',
+        1000,
+        '',
+        '2023-08-25',
+        FALSE
+    );
+
+/*history transfer*/
+SELECT
+    t.ID_TRANSFER,
+    u_from.USERNAME AS FROM_USERNAME,
+    t.USERNAME_PENERIMA AS TO_USERNAME,
+    t.AMOUNT,
+    t.CREATED_AT
+FROM
+    TRANSFER t
+    JOIN USER u_from ON t.ID_USER = u_from.ID_USER
+WHERE
+    t.IS_DELETED = FALSE
+ORDER BY
+    t.CREATED_AT DESC;
+
+/*melakukan transaksi*/
+INSERT INTO
+    TRANSAKSI (
+        TRANSACTION_TYPE,
+        AMOUNT,
+        CREATED_AT,
+        IS_DELETED
+    )
+VALUES
+    ('INI TIPE TRANSAKSI', 10000, '2023-08-25', FALSE);
+
+/*history transaksi*/
+SELECT
+    t.ID_TRANSAKSI,
+    u.USERNAME,
+    t.TRANSACTION_TYPE,
+    t.AMOUNT,
+    t.CREATED_AT
+FROM
+    TRANSAKSI t
+    JOIN USER u ON t.ID_USER = u.ID_USER
+WHERE
+    t.IS_DELETED = FALSE
+ORDER BY
+    t.CREATED_AT DESC;
+
+/*history log*/
+/*dari history transfer*/
+INSERT INTO
+    HISTORY (ID_USER, TYPE, CREATED_AT, IS_DELETED)
+SELECT
+    t.ID_USER,
+    'transfer',
+    t.CREATED_AT,
+    0
+FROM
+    TRANSFER t
+WHERE
+    t.IS_DELETED = FALSE;
+
+/*dari history top up*/
+INSERT INTO
+    HISTORY (ID_USER, TYPE, CREATED_AT, IS_DELETED)
+SELECT
+    t.ID_USER,
+    'topup',
+    t.CREATED_AT,
+    0
+FROM
+    TOPUP t
+WHERE
+    t.IS_DELETED = FALSE;
+
+/*dari history transaksi*/
+INSERT INTO
+    HISTORY (ID_USER, TYPE, CREATED_AT, IS_DELETED)
+SELECT
+    t.ID_USER,
+    'transaksi',
+    t.CREATED_AT,
+    0
+FROM
+    TRANSAKSI t
+WHERE
+    t.IS_DELETED = FALSE;
